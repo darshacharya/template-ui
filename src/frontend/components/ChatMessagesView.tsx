@@ -174,7 +174,7 @@ const HumanMessageBubble: React.FC<HumanMessageBubbleProps> = ({
 
       <div dangerouslySetInnerHTML={{
         __html: typeof message.content === "string"
-          ? message.content
+          ? message.content.replace(/\n/g, '<br>')
           : JSON.stringify(message.content)
       }} />
       {/* <ReactMarkdown components={mdComponents}>

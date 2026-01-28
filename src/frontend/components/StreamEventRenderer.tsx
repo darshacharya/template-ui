@@ -10,6 +10,7 @@ import {
   Play,
   Zap,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface StreamEventRendererProps {
   events: StreamEvent[];
@@ -98,13 +99,13 @@ export function StreamEventRenderer({ events, isLoading }: StreamEventRendererPr
                   <span className="text-sm font-medium text-purple-100">AI Thinking</span>
                   {isLoading && <Loader2 className="w-3 h-3 text-purple-400 animate-spin" />}
                 </div>
-                <p className="text-sm text-purple-200/80 italic">
-                  <div dangerouslySetInnerHTML={{
-                    __html: typeof event.content === "string"
+                <div className="text-sm text-purple-200/80 italic">
+                  <ReactMarkdown>
+                    {typeof event.content === "string"
                       ? event.content
-                      : JSON.stringify(event.content)
-                  }} />
-                </p>
+                      : JSON.stringify(event.content)}
+                  </ReactMarkdown>
+                </div>
               </div>
             </div>
           </div>
@@ -196,11 +197,11 @@ export function StreamEventRenderer({ events, isLoading }: StreamEventRendererPr
                   AI Response
                 </div>
                 <div className="text-sm text-neutral-200 prose prose-sm prose-invert max-w-none">
-                <div dangerouslySetInnerHTML={{
-                    __html: typeof event.content === "string"
+                  <ReactMarkdown>
+                    {typeof event.content === "string"
                       ? event.content
-                      : JSON.stringify(event.content)
-                  }} />
+                      : JSON.stringify(event.content)}
+                  </ReactMarkdown>
                   {isLoading && <span className="animate-pulse">|</span>}
                 </div>
               </div>

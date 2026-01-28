@@ -9,8 +9,8 @@ import { Badge } from "./ui/badge";
 import {
   ProcessedEvent,
 } from "./ActivityTimeline";
-import { StreamEventRenderer } from "./StreamEventRenderer";
-import { StreamEvent, ToolCall } from "../hooks/useDataStream";
+import { StreamEvent } from "../hooks/useDataStream";
+import ReactMarkdown from "react-markdown";
 
 // Markdown component props type from former ReportView
 type MdComponentProps = {
@@ -171,17 +171,11 @@ const HumanMessageBubble: React.FC<HumanMessageBubbleProps> = ({
     <div
       className={`text-white rounded-3xl break-words min-h-7 bg-neutral-700 max-w-[100%] sm:max-w-[90%] p-3 rounded-br-xs`}
     >
-
-      <div dangerouslySetInnerHTML={{
-        __html: typeof message.content === "string"
-          ? message.content.replace(/\n/g, '<br>')
-          : JSON.stringify(message.content)
-      }} />
-      {/* <ReactMarkdown components={mdComponents}>
+      <ReactMarkdown components={mdComponents}>
         {typeof message.content === "string"
           ? message.content
           : JSON.stringify(message.content)}
-      </ReactMarkdown> */}
+      </ReactMarkdown>
     </div>
   );
 };
@@ -202,27 +196,13 @@ const AiMessageBubble: React.FC<AiMessageBubbleProps> = ({
 }) => {
   return (
     <div className={`relative break-words flex flex-col w-full`}>
-      <div className="w-full" dangerouslySetInnerHTML={{
-        __html: typeof message.content === "string"
-          ? message.content
-          : JSON.stringify(message.content)
-      }} />
-      {/* <Button
-        variant="default"
-        className={`cursor-pointer bg-neutral-700 border-neutral-600 text-neutral-300 self-end ${message.content.length > 0 ? "visible" : "hidden"
-          }`}
-        onClick={() =>
-          handleCopy(
-            typeof message.content === "string"
-              ? message.content
-              : JSON.stringify(message.content),
-            message.id!
-          )
-        }
-      >
-        {copiedMessageId === message.id ? "Copied" : "Copy"}
-        {copiedMessageId === message.id ? <CopyCheck /> : <Copy />}
-      </Button> */}
+      <div className="w-full prose prose-invert max-w-none">
+        <ReactMarkdown components={mdComponents}>
+          {typeof message.content === "string"
+            ? message.content
+            : JSON.stringify(message.content)}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 };

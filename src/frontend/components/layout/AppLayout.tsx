@@ -52,8 +52,14 @@ export function AppLayout({ children }: AppLayoutProps) {
   };
 
   const handleDeleteChat = (chatId: string) => {
+    const chatToDelete = chats.find(chat => chat.id === chatId);
+    const chatName = chatToDelete?.title || "this chat";
+
+    if (!window.confirm(`Are you sure you want to delete "${chatName}"?`)) {
+      return;
+    }
+
     deleteChat(chatId);
-    // Navigate to home if we're currently on the deleted chat
     if (window.location.pathname === `/chat/${chatId}`) {
       const remainingChats = chats.filter(chat => chat.id !== chatId);
       if (remainingChats.length > 0) {
